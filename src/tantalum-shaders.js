@@ -663,6 +663,58 @@ var Shaders = {
         '    }\n'                                                                          +
         '}\n',
 
+    'scene8':
+        '#include "trace-frag"\n\n'                                                        +
+
+        '#include "bsdf"\n'                                                                +
+        '#include "intersect"\n'                                                           +
+        '#include "csg-intersect"\n\n'                                                     +
+
+        'void intersect(Ray ray, inout Intersection isect) {\n'                            +
+        '    bboxIntersect(ray, vec2(0.0), vec2(2.0, 1.0), 0.0, isect);\n\n'               +
+
+        '    sphereIntersect(ray, vec2(-1.0, 0.5), 0.33, 2.0, isect);\n'                   +
+        '    prismIntersect(ray, vec2(1.0, 0.5), 0.4, 2.0, isect);\n'                      +
+        '    prismIntersect(ray, vec2(-1.0, -0.5), 0.33, 1.0, isect);\n'                   +
+        '    sphereIntersect(ray, vec2(1.0, -0.5), 0.25, 1.0, isect);\n\n'                 +
+
+        '    sphereIntersect(ray, vec2(0.0, 1.0), 0.33, 3.0, isect);\n'                    +
+        '    prismIntersect(ray, vec2(0.0, -1.5), 1.0, 4.0, isect);\n\n'                   +
+
+        '    meniscusLensIntersect   (ray, vec2(-0.75, 0.0), 0.1875, 0.075,   0.225, 0.37' +
+                                                                     '5, 1.0, isect);\n'   +
+        '    planoConvexLensIntersect(ray, vec2(-0.45, 0.0), 0.1875, 0.0375,  0.375,     ' +
+                                                                     '   1.0, isect);\n'   +
+        '    biconvexLensIntersect   (ray, vec2(-0.15, 0.0), 0.1875, 0.075,   0.375, 0.37' +
+                                                                     '5, 2.0, isect);\n'   +
+        '    biconcaveLensIntersect  (ray, vec2( 0.15, 0.0), 0.1875, 0.01875, 0.375, 0.37' +
+                                                                     '5, 2.0, isect);\n'   +
+        '    meniscusLensIntersect   (ray, vec2( 0.45, 0.0), 0.1875, 0.075,   0.225, 0.37' +
+                                                                     '5, 1.0, isect);\n'   +
+        '    planoConvexLensIntersect(ray, vec2( 0.75, 0.0), 0.1875, 0.0375,  0.375,     ' +
+                                                                     '   1.0, isect);\n'   +
+        '}\n\n'                                                                            +
+
+        'vec2 sample(inout vec4 state, Intersection isect, float lambda, vec2 wiLocal, in' +
+                                                              'out vec3 throughput) {\n'   +
+        '    if (isect.mat == 1.0) {\n'                                                    +
+        '        float ior = sellmeierIor(vec3(1.6215, 0.2563, 1.6445), vec3(0.0122, 0.05' +
+                                                 '96, 147.4688), lambda)/1.6; // SF10\n'   +
+        '        return sampleDielectric(state, wiLocal, ior);\n'                          +
+        '    } else if (isect.mat == 2.0) {\n'                                             +
+        '        float ior = sellmeierIor(vec3(1.6215, 0.2563, 1.6445), vec3(0.0122, 0.05' +
+                                                          '96, 17.4688), lambda)/1.8;\n'   +
+        '        return sampleRoughDielectric(state, wiLocal, 0.1, ior);\n'                +
+        '    } else if (isect.mat == 3.0) {\n'                                             +
+        '        return sampleMirror(wiLocal);\n'                                          +
+        '    } else if (isect.mat == 4.0) {\n'                                             +
+        '        return sampleRoughMirror(state, wiLocal, throughput, 0.05);\n'            +
+        '    } else {\n'                                                                   +
+        '        throughput *= vec3(0.25);\n'                                              +
+        '        return sampleDiffuse(state, wiLocal);\n'                                  +
+        '    }\n'                                                                          +
+        '}\n',
+
     'trace-frag':
         '#extension GL_EXT_draw_buffers : require\n'                                        +
         '#include "preamble"\n'                                                             +
