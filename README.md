@@ -1,6 +1,12 @@
-![Tantalum Sample Render](https://raw.githubusercontent.com/tunabrain/tantalum/master/Header.jpg "Tantalum Sample Render")
+![Tantalum Sample Render](https://raw.githubusercontent.com/tunabrain/tantalum/master/Header.jpg "Tantalum Redux Sample Render")
 
-# The Tantalum Renderer #
+# The Tantalum Redux Renderer #
+
+## This Fork ##
+
+This fork takes the original Tantalum renderer and makes it into a passive viewing experience.  It retains the mouse-based interaction if desired, but generally just loops forever, generating a new ray pointing in a central-ish direction after each iteration completes.  I've created a new scene different from the previously provided ones, and used all of the materials available, including dialectrics, rough dialectrics, mirrors, and rough mirrors.
+
+I would like to extend the my thanks to tunabrain for the original work, it was immaculate and clean.  I am planning on bundling this with my other project, [UltimateSensorMonitor](https://github.com/MarkVabulas/ultimon),  as an available background or disconnected screen.  It's for that purposes that interactivity was sacrificed for a dynamic and pleasing result.
 
 ## About ##
 
