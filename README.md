@@ -1,4 +1,4 @@
-![Tantalum Sample Render](https://raw.githubusercontent.com/tunabrain/tantalum/master/Header.jpg "Tantalum Redux Sample Render")
+![Tantalum Sample Render](https://raw.githubusercontent.com/markvabulas/tantalum/master/Header.jpg "Tantalum Redux Sample Render")
 
 # The Tantalum Redux Renderer #
 
